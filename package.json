@@ -1,0 +1,25 @@
+{
+  "name": "emarketplace-rest-api",
+  "version": "1.0.0",
+  "description": "REST API for online marketplace",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "keywords": [
+    "express",
+    "rest",
+    "mongoose"
+  ],
+  "author": "Steliyan Petkov",
+  "license": "ISC",
+  "dependencies": {
+    "cookie-parser": "^1.4.6",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.0",
+    "mongoose": "^6.8.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}
