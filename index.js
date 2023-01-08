@@ -3,6 +3,7 @@ const cors = require('./src/middlewares/cors');
 const db = require('./src/config/database');
 const router = require('./src/router');
 const cookieParser = require('cookie-parser');
+const sessionMiddleware = require('./src/middlewares/sessionMiddleware');
 
 
 const app = express();
@@ -10,7 +11,8 @@ const PORT = process.env.PORT || 3030;
 
 app.use(express.json());
 app.use(cors());
-app.use(cookieParser())
+app.use(cookieParser());
+app.use(sessionMiddleware())
 app.use(router);
 
 

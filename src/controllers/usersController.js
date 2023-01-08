@@ -29,8 +29,9 @@ router.post('/login', async (req, res) => {
     }
 })
 
-router.post('/logout', (req, res) => {
-    
+router.get('/logout', (req, res) => {
+    userService.logout(req.token);
+    res.status(204).end();
 })
 
 

@@ -4,7 +4,11 @@ const jwt = require('jsonwebtoken');
 const { JWT_SECRET } = require('../config/constants');
 const {promisify} = require('util')
 
-const jwtSignAsync = promisify(jwt.sign) // Promisifying JWT
+// Promisifying JWT
+const jwtSignAsync = promisify(jwt.sign) 
+const jwtVerifyAsync = promisify(jwt.verify)
+
+const tokenBlacklist = new Set();
 
 async function register(user) {
     return await User.create(user)
@@ -29,14 +33,27 @@ async function login(user) {
     // return user with token
     return {
         username: existing.username,
-        email: existing.email,
         _id: existing._id,
         token
     }
 
 }
 
+function logout(token) {
+    tokenBlacklist.add(token);
+}
+
+async function verifyToken(token) {
+    if(tokenBlacklist.has(token)) {
+        throw new Error('Token is blacklisted')
+    }
+
+    return await jwtVerifyAsync(token, JWT_SECRET);
+}
+
 module.exports = {
     register,
-    login
+    login,
+    logout,
+    verifyToken
 }
