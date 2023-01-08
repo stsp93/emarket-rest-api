@@ -9,22 +9,28 @@ router.get('/', (req, res) => {
 
 
 router.post('/register', async (req, res) => {
-    const user = req.body;
     try {
-        await userService.register(user);
-        res.status(201).json(user)
+        const user = await userService.register(req.body);
+        const {username, email, _id} = user;
+        res.status(201).json({username, email, _id})
     } catch (error) {
         console.log(error);
-        res.status(400).json(errorHandler(error))
+        res.status(400).json(errorHandler(error));
     }
 })
 
-router.post('/login', (req, res) => {
-
+router.post('/login', async (req, res) => {
+    try {
+        const user = await userService.login(req.body);
+        res.json(user)
+    } catch (error) {
+        console.log(error);
+        res.status(400).json(errorHandler(error));
+    }
 })
 
 router.post('/logout', (req, res) => {
-
+    
 })
 
 
