@@ -37,3 +37,7 @@ const itemSchema = new Schema({
         ref: 'User',
     }
 })
+
+const Item = model('Item', itemSchema)
+
+module.exports = Item;
