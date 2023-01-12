@@ -22,7 +22,7 @@ router.post('/register', async (req, res) => {
 router.post('/login', async (req, res) => {
     try {
         const user = await userService.login(req.body);
-        res.json(user)
+        return res.json(user)
     } catch (error) {
         console.log(error);
         res.status(400).json(errorHandler(error));

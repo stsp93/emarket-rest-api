@@ -1,5 +1,5 @@
 const { Schema, model } = require("mongoose");
-const { CATEGORIES } = require("../config/constants");
+const { CATEGORIES, NO_IMG_URL } = require("../config/constants");
 
 const itemSchema = new Schema({
     title: {
@@ -19,7 +19,15 @@ const itemSchema = new Schema({
     },
     imageUrl: {
         type: String,
-        match: [/^http/, 'Please enter valid URL']
+        match: [/^http/, 'Please enter valid URL'],
+        default: NO_IMG_URL
+    },
+    description: {
+        type:String,
+        required:[true, 'Please add description']
+    },
+    phone: {
+        type: Number
     },
     price: {
         type: Number,
@@ -27,13 +35,10 @@ const itemSchema = new Schema({
     },
     createdOn: {
         type: Date,
-        default: () => new Date().now()
+        default: () => Date.now()
     },
-    phone: {
-        type: Number
-    },
-    ownerId: {
-        type: Schema.Types.ObjectId,
+    owner: {
+        type: String,
         ref: 'User',
     }
 })

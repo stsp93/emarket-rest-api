@@ -4,7 +4,7 @@ const errorHandler = require("../utils/errorHandler");
 
 module.exports = () => async (req, res, next) => {
 
-    const token = req.headers['Authorization'];
+    const token = req.headers['authorization'];
     if (token) {
         try {
             const user = await verifyToken(token);
