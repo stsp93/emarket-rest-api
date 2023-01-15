@@ -32,6 +32,21 @@ router.post('/', async (req, res) => {
     }
 })
 
+router.put('/:id', async (req, res) => {
+    const changes = req.body;
+    const id = req.params.id
+    const user = req.user.username
+    try {
+        if(!req.token) throw new Error('You need to login first')
+
+        const editedItem = await itemService.updateItem(id,user,changes);
+        res.json(editedItem)
+    } catch (error) {
+        console.log(error);
+        res.status(400).json(errorHandler(error));
+    }
+})
+
 
 
 
