@@ -11,9 +11,8 @@ module.exports = () => async (req, res, next) => {
             req.user = user
             req.token = token
         } catch (error) {
-            req.status(401).json(errorHandler(error));
+           return res.status(401).json(errorHandler(error));
         }
-
     }
 
     next()
