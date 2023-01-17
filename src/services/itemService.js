@@ -18,7 +18,7 @@ async function listItem(item) {
 
 async function updateItem(id,user, changes) {
     const item = await Item.findById(id);
-    if(item.owner !== user) throw new Error('You can edit only your own listings');
+    if(item.owner !== user) throw {message:'You can edit only your own listings', status:403};
 
     Object.entries(changes).forEach((k, v) => item[k] = v);
 
@@ -27,7 +27,7 @@ async function updateItem(id,user, changes) {
 
 async function deleteItem(id,user, changes) {
     const item = await Item.findById(id);
-    if(item.owner !== user) throw new Error('You can delete only your own listings');
+    if(item.owner !== user) throw {message:'You can delete only your own listings', status:403};
 
     return await item.delete();
 }

@@ -34,14 +34,14 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
     const item = req.body;
     try {
-        if(!req.token) throw new Error('You need to login first')
+        if(!req.token) throw {message:'You need to login first', status: 403}
 
         item.owner = req.user.username
         const listedItem = await itemService.listItem(item);
         res.status(201).json(listedItem)
     } catch (error) {
         console.log(error);
-        res.status(400).json(errorHandler(error));
+        res.status(error.status || 400).json(errorHandler(error));
     }
 })
 
@@ -54,7 +54,7 @@ router.put('/:id', async (req, res) => {
         res.json(editedItem)
     } catch (error) {
         console.log(error);
-        res.status(400).json(errorHandler(error));
+        res.status(error.status || 400).json(errorHandler(error));
     }
 })
 
@@ -66,7 +66,7 @@ router.delete('/:id', async (req, res) => {
         res.status(204).json({})
     } catch (error) {
         console.log(error);
-        res.status(400).json(errorHandler(error));
+        res.status(error.status || 400).json(errorHandler(error));
     }
 })
 
