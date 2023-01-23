@@ -12,7 +12,7 @@ const itemSchema = new Schema({
         required: [true, 'Category can\'t be empty'],
         validate: {
             validator: function (v) {
-                return CATEGORIES.includes(v)
+                return Object.keys(CATEGORIES).includes(v)
             },
             message: props => `${props.value} is not a valid Category!`
         }

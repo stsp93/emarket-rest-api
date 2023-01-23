@@ -4,8 +4,12 @@ const {CATEGORIES} = require('../config/constants');
 
 const router = require('express').Router();
 
-router.get('/:category/', async (req, res,next) => {
-    if(!CATEGORIES.includes(req.params.category)) return next();
+router.get('/categories', (req,res) => {
+    res.json(CATEGORIES);
+})
+
+router.get('/:category', async (req, res,next) => {
+    if(!Object.keys(CATEGORIES).includes(req.params.category)) return next();
 
     try {
         const results = await itemService.getCategoryListings(req.params.category)
