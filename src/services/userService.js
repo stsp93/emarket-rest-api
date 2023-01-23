@@ -28,7 +28,6 @@ async function login(user) {
         _id: existing._id,
     }
     const token = await jwtSignAsync(payload,JWT_SECRET,{expiresIn:'2d'});
-    console.log(token);
 
     // return user with token
     return {
