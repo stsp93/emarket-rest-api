@@ -26,6 +26,10 @@ const itemSchema = new Schema({
         type:String,
         required:[true, 'Please add description']
     },
+    location: {
+        type:String,
+        required:[true, 'Please add location']
+    },
     phone: {
         type: Number
     },
