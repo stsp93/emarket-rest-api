@@ -11,6 +11,8 @@ module.exports = () => async (req, res, next) => {
             req.user = user
             req.token = token
         } catch (error) {
+            if(error.name === 'TokenExpiredError') return res.status(403).json(errorHandler(error));
+
            return res.status(401).json(errorHandler(error));
         }
     }
