@@ -51,8 +51,8 @@ router.post('/', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
     const changes = req.body;
-    const id = req.params.id
-    const user = req.user.username
+    const id = req.params.id;
+    const user = req.user.username;
     try {
         const editedItem = await itemService.updateItem(id,user,changes);
         res.json(editedItem)
@@ -66,7 +66,7 @@ router.delete('/:id', async (req, res) => {
     const id = req.params.id
     const user = req.user.username
     try {
-        await itemService.deleteItem(id,user,changes);
+        await itemService.deleteItem(id,user);
         res.status(204).json({})
     } catch (error) {
         console.log(error);

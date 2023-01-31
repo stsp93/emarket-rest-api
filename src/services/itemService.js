@@ -18,9 +18,12 @@ async function listItem(item) {
 
 async function updateItem(id,user, changes) {
     const item = await Item.findById(id);
+    console.log('service');
+    console.log(changes);
     if(item.owner !== user) throw {message:'You can edit only your own listings', status:403};
 
-    Object.entries(changes).forEach((k, v) => item[k] = v);
+    Object.entries(changes).forEach(([k, v]) => item[k] = v);
+
 
     return await item.save();
 }
