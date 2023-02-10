@@ -2,10 +2,10 @@ const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { JWT_SECRET } = require('../config/constants');
-const {promisify} = require('util')
+const { promisify } = require('util')
 
 // Promisifying JWT
-const jwtSignAsync = promisify(jwt.sign) 
+const jwtSignAsync = promisify(jwt.sign)
 const jwtVerifyAsync = promisify(jwt.verify)
 
 const tokenBlacklist = new Set();
@@ -16,7 +16,7 @@ async function register(user) {
 
 async function login(user) {
     // find user by email
-    const existing = await User.findOne({ email: new RegExp(`^${user.email}$`,'i') });
+    const existing = await User.findOne({ email: user.email }).collation({ locale: 'en', strength: 2 });
 
     // check username/password
     if (!existing || !await bcrypt.compare(user.password, existing.password)) throw new Error('Email or Password are incorrect')
@@ -27,7 +27,7 @@ async function login(user) {
         email: existing.email,
         _id: existing._id,
     }
-    const token = await jwtSignAsync(payload,JWT_SECRET,{expiresIn:'2d'});
+    const token = await jwtSignAsync(payload, JWT_SECRET, { expiresIn: '2d' });
 
     // return user with token
     return {
@@ -44,7 +44,7 @@ function logout(token) {
 }
 
 async function verifyToken(token) {
-    if(tokenBlacklist.has(token)) {
+    if (tokenBlacklist.has(token)) {
         throw new Error('Token is blacklisted')
     }
 
