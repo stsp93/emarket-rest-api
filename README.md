@@ -9,6 +9,17 @@ The REST API is currently in beta.
 
 ---
 
+## Getting Started
+
+To get started with the REST API, follow these steps:
+
+1. Clone the repository: `git clone https://github.com/stsp93/emarket-rest-api.git`
+2. Install the dependencies: `npm install`
+3. Start the API: `npm start`
+
+The REST API requires a MongoDB database to be running.
+The API will be available at `http://localhost:3030`. You can test the endpoints using tools such as `curl` or a REST client.
+
 ## Endpoints
 
 ### /users
