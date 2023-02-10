@@ -47,6 +47,13 @@ const itemSchema = new Schema({
     }
 })
 
+itemSchema.index({title:1}, {
+    collation: {
+        locale:'en',
+        strength: 2
+    }
+})
+
 const Item = model('Item', itemSchema)
 
 module.exports = Item;
