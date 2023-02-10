@@ -8,23 +8,10 @@ router.get('/categories', (req,res) => {
     res.json(CATEGORIES);
 })
 
-router.get('/:category', async (req, res,next) => {
-    if(!Object.keys(CATEGORIES).includes(req.params.category)) return next();
-
-    try {
-        const results = await itemService.getCategoryListings(req.params.category)
-        return res.json(results);
-    } catch (error) {
-        console.log(error);
-        res.status(400).json(errorHandler(error));
-    }
-})
-
-
-
-router.get('/', async (req, res) => {
-    const {cat, q} = req.query;
-    const result = await itemService.getAllListings(cat, q);
+router.get('/', async (req, res, next) => {
+    const { q: query ,cat: category} = req.query;
+    if(!Object.keys(CATEGORIES).includes(category)) return next();
+    const result = await itemService.getAllListings(query, category);
     return res.json(result)
 })
 

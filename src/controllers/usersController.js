@@ -3,11 +3,6 @@ const errorHandler = require('../utils/errorHandler');
 
 const router = require('express').Router();
 
-router.get('/', (req, res) => {
-    res.json({ message: 'users working' })
-})
-
-
 router.post('/register', async (req, res) => {
     try {
         const user = await userService.register(req.body);
