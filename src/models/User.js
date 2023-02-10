@@ -29,7 +29,7 @@ userSchema.pre('save', async function (next) {
     next()
 })
 
-userSchema.index({username:1}, {
+userSchema.index({email:1}, {
     collation: {
         locale:'en',
         strength: 2

@@ -1,6 +1,6 @@
 const Item = require("../models/Item");
 
-async function getAllListings(category, query = '') {
+async function getAllListings(query = '',category) {
     if(category) return await Item.find({title: new RegExp(query, 'i'), category})
 
     return await Item.find({title: new RegExp(query, 'i')})
