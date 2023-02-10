@@ -20,18 +20,11 @@ router.get('/:category', async (req, res,next) => {
     }
 })
 
-router.get('/:id', async (req,res) => {
-    try {
-        const result = await itemService.getItemDetails(req.params.id)
-        return res.json(result);
-    } catch (error) {
-        console.log(error);
-        res.status(400).json(errorHandler(error));
-    }
-})
+
 
 router.get('/', async (req, res) => {
-    const result = await itemService.getAllListings();
+    const {cat, q} = req.query;
+    const result = await itemService.getAllListings(cat, q);
     return res.json(result)
 })
 
@@ -46,6 +39,17 @@ router.post('/', async (req, res) => {
     } catch (error) {
         console.log(error);
         res.status(error.status || 400).json(errorHandler(error));
+    }
+})
+
+router.get('/:id', async (req,res) => {
+    try {
+        const result = await itemService.getItemDetails(req.params.id);
+        console.log(result);
+        return res.json(result);
+    } catch (error) {
+        console.log(error);
+        res.status(400).json(errorHandler(error));
     }
 })
 
