@@ -1,5 +1,5 @@
 const { Schema, model } = require("mongoose");
-const { CATEGORIES, NO_IMG_URL } = require("../config/constants");
+const { CATEGORIES, NO_IMG_URL} = require("../config/constants");
 
 const itemSchema = new Schema({
     title: {
@@ -19,8 +19,10 @@ const itemSchema = new Schema({
     },
     imageUrl: {
         type: String,
-        match: [/^http/, 'Please enter valid URL'],
-        default: NO_IMG_URL
+        set: value => {
+            if(!value.match(/^https?:\/\//));
+            return NO_IMG_URL
+        },
     },
     description: {
         type:String,
@@ -47,12 +49,19 @@ const itemSchema = new Schema({
     }
 })
 
+// Find to return results by date in desc
+itemSchema.pre('find', function(next) {
+    this.sort({createdOn: -1})
+    next()
+})
+
 itemSchema.index({title:1}, {
     collation: {
         locale:'en',
         strength: 2
     }
 })
+
 
 const Item = model('Item', itemSchema)
 

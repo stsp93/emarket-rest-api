@@ -10,9 +10,9 @@ router.get('/categories', (req,res) => {
 
 router.get('/', async (req, res, next) => {
     const { q: query ,cat: category} = req.query;
-    if(!Object.keys(CATEGORIES).includes(category)) return next();
-    const result = await itemService.getAllListings(query, category);
-    return res.json(result)
+    if(category && !Object.keys(CATEGORIES).includes(category)) return next();
+    const results = await itemService.getListings(query, category);;
+    return res.json(results)
 })
 
 router.post('/', async (req, res) => {

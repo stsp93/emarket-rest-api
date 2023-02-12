@@ -1,28 +1,28 @@
 const Item = require("../models/Item");
 
-async function getAllListings(query = '',category) {
-    if(category) return await Item.find({title: new RegExp(query, 'i'), category})
+async function getListings(query = '', category) {
+    let findQuery = {}
+    if(category) findQuery.category = category
+    if(query) findQuery.title = new RegExp(query, 'i')
+    
 
-    return await Item.find({title: new RegExp(query, 'i')})
+    return await Item.find(findQuery).collation({ locale: 'en', strength: 2 })
 }
 
-async function getCategoryListings(category) {
-    return await Item.find({category});
-}
 
 async function getItemDetails(id) {
     return await Item.findById(id);
 }
 
 async function listItem(item) {
-   return await Item.create(item);
+    return await Item.create(item);
 }
 
-async function updateItem(id,user, changes) {
+async function updateItem(id, user, changes) {
     const item = await Item.findById(id);
     console.log('service');
     console.log(changes);
-    if(item.owner !== user) throw {message:'You can edit only your own listings', status:403};
+    if (item.owner !== user) throw { message: 'You can edit only your own listings', status: 403 };
 
     Object.entries(changes).forEach(([k, v]) => item[k] = v);
 
@@ -30,18 +30,17 @@ async function updateItem(id,user, changes) {
     return await item.save();
 }
 
-async function deleteItem(id,user, changes) {
+async function deleteItem(id, user, changes) {
     const item = await Item.findById(id);
-    if(item.owner !== user) throw {message:'You can delete only your own listings', status:403};
+    if (item.owner !== user) throw { message: 'You can delete only your own listings', status: 403 };
 
     return await item.delete();
 }
 
 
 module.exports = {
-    getAllListings,
+    getListings,
     listItem,
-    getCategoryListings,
     updateItem,
     deleteItem,
     getItemDetails,
