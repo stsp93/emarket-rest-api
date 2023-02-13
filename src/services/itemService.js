@@ -1,4 +1,5 @@
-const Item = require("../models/Item");
+const {Item} = require("../models/Item");
+const { User } = require("../models/User");
 
 async function getListings(query = '', category) {
     let findQuery = {}
@@ -15,13 +16,16 @@ async function getItemDetails(id) {
 }
 
 async function listItem(item) {
-    return await Item.create(item);
+    const user = await User.findOne({username:item.owner});
+    const newItem = await Item.create(item);
+
+    user.ownListings.push(newItem);
+    await user.save();
+    return newItem;
 }
 
 async function updateItem(id, user, changes) {
     const item = await Item.findById(id);
-    console.log('service');
-    console.log(changes);
     if (item.owner !== user) throw { message: 'You can edit only your own listings', status: 403 };
 
     Object.entries(changes).forEach(([k, v]) => item[k] = v);
