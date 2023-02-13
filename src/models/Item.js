@@ -51,11 +51,15 @@ itemSchema.pre('find', function(next) {
     next()
 })
 
-// set default imageUrl if invalid
+// Pre save hooks
 itemSchema.pre('save', function(next) {
+    // format price (10.99)
+    this.price = this.price.toFixed(2)
+    // set default imageUrl if invalid
     if((!this.imageUrl.match(/https?:\/\//i))) this.imageUrl = NO_IMG_URL;
     next();
 })
+
 
 itemSchema.index({title:1}, {
     collation: {
@@ -63,6 +67,8 @@ itemSchema.index({title:1}, {
         strength: 2
     }
 })
+
+
 
 
 const Item = model('Item', itemSchema)
