@@ -1,4 +1,4 @@
-const User = require('../models/User');
+const {User} = require('../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { JWT_SECRET } = require('../config/constants');
@@ -51,9 +51,14 @@ async function verifyToken(token) {
     return await jwtVerifyAsync(token, JWT_SECRET);
 }
 
+async function getUserListings(userId) {
+    return await User.findById(userId).select('-ownListings.owner')
+}
+
 module.exports = {
     register,
     login,
     logout,
-    verifyToken
+    verifyToken,
+    getUserListings
 }

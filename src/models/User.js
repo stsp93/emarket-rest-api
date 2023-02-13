@@ -1,7 +1,8 @@
 const { Schema, model } = require("mongoose");
 const { SALT_ROUNDS } = require("../config/constants");
-const bcrypt = require('bcrypt')
-const emailPattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+const bcrypt = require('bcrypt');
+const { itemSchema } = require("./Item");
+const emailPattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 const userSchema = new Schema({
     username: {
@@ -20,7 +21,12 @@ const userSchema = new Schema({
         type: String,
         required: [true, 'Please enter Password'],
         minLength: [3, 'Password should be at least 3 characters long']
-    }
+    },
+    ownListings: [
+        {
+            type:itemSchema,
+        }
+    ]
 })
 
 // Hashing password before saving in the DB
@@ -38,4 +44,4 @@ userSchema.index({email:1}, {
 
 const User = model('User', userSchema);
 
-module.exports = User;
+exports.User = User;
