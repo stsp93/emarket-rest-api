@@ -19,10 +19,6 @@ const itemSchema = new Schema({
     },
     imageUrl: {
         type: String,
-        set: value => {
-            if(!value.match(/^https?:\/\//));
-            return NO_IMG_URL
-        },
     },
     description: {
         type:String,
@@ -49,10 +45,16 @@ const itemSchema = new Schema({
     }
 })
 
-// Find to return results by date in desc
+// Find to return results by date
 itemSchema.pre('find', function(next) {
     this.sort({createdOn: -1})
     next()
+})
+
+// set default imageUrl if invalid
+itemSchema.pre('save', function(next) {
+    if((!this.imageUrl.match(/https?:\/\//i))) this.imageUrl = NO_IMG_URL;
+    next();
 })
 
 itemSchema.index({title:1}, {
@@ -65,4 +67,5 @@ itemSchema.index({title:1}, {
 
 const Item = model('Item', itemSchema)
 
-module.exports = Item;
+exports.Item = Item;
+exports.itemSchema = itemSchema;
