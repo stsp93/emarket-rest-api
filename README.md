@@ -27,31 +27,32 @@ The API will be available at `http://localhost:3030`. You can test the endpoints
 > POST : /users/register 
 - Creates a user (email, username, hashedPassword)
 > POST : /users/login
-- User login, retrieves JWT(username, email, _id)
+- User login, returns JWT(username, email, _id)
 > POST : /users/logout
 - User logout, blacklisting JWT
-
+> POST : /users/profile
+- Returns array of all user listings
 ### /items
 
 > GET : /items/categories
-- Retrieves an object of available categories and relevant image Urls.
+- Returns an object of available categories and relevant image Urls.
 
 ```
 Example 
-{ Clothing: clothingImageUrl, Vehicles: vehiclesImageUrl}
+{ category1: category1ImageUrl, category2: category2ImageUrl}
 ```
 
 > GET : /items/:id
-- Retrieve a specific item by its ID.
+- Returns a specific item by its ID in form of an Object.
 
 > POST : /items
-- Creates item (for logged in Users)
+- Creates item (for logged in Users) and returns the created object
 
 > PUT : /items/:id
-- Updates item (for logged in Users)
+- Updates item (for logged in Users) and returns the edited object
 
 > PUT : /items/:id
-- Delete item (for logged in Users)
+- Delete item (for logged in Users) returns no content
 
 #### Query parameters for /items
 
