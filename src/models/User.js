@@ -1,4 +1,4 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model, Types } = require("mongoose");
 const { SALT_ROUNDS } = require("../config/constants");
 const bcrypt = require('bcrypt');
 const { itemSchema } = require("./Item");
@@ -24,14 +24,18 @@ const userSchema = new Schema({
     },
     ownListings: [
         {
-            type:itemSchema,
+            type:Types.ObjectId,
+            ref:'Item'
         }
     ]
 })
 
 // Hashing password before saving in the DB
 userSchema.pre('save', async function (next) {
-    this.password = await bcrypt.hash(this.password, SALT_ROUNDS)
+    if (this.isModified('password')){
+        this.password = await bcrypt.hash(this.password, SALT_ROUNDS)
+    }
+
     next()
 })
 
