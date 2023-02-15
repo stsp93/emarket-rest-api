@@ -1,5 +1,4 @@
 const {Item} = require("../models/Item");
-const { User } = require("../models/User");
 
 async function getListings(query = '', category) {
     let findQuery = {}
@@ -16,11 +15,7 @@ async function getItemDetails(id) {
 }
 
 async function listItem(item) {
-    const user = await User.findOne({username:item.owner});
     const newItem = await Item.create(item);
-
-    user.ownListings.push(newItem);
-    await user.save();
     return newItem;
 }
 

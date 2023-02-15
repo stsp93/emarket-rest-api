@@ -1,4 +1,5 @@
 const itemService = require('../services/itemService');
+const userService = require('../services/userService');
 const errorHandler = require('../utils/errorHandler');
 const {CATEGORIES} = require('../config/constants');
 
@@ -22,6 +23,7 @@ router.post('/', async (req, res) => {
 
         item.owner = req.user.username
         const listedItem = await itemService.listItem(item);
+        await userService.saveListing(listedItem)
         res.status(201).json(listedItem)
     } catch (error) {
         console.log(error);

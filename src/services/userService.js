@@ -52,7 +52,13 @@ async function verifyToken(token) {
 }
 
 async function getUserListings(userId) {
-    return await User.findById(userId).select('-ownListings.owner')
+    return await User.findById(userId).populate('ownListings', '-ownListings.owner')
+}
+
+async function saveListing(item) {
+    const user = await User.findOne({username: item.owner}).collation({locale:'en', strength: 2})
+    user.ownListings.push(item);
+    user.save();
 }
 
 module.exports = {
@@ -60,5 +66,6 @@ module.exports = {
     login,
     logout,
     verifyToken,
-    getUserListings
+    getUserListings,
+    saveListing
 }
