@@ -26,7 +26,7 @@ The API will be available at `http://localhost:3030`. You can test the endpoints
 
 > POST : /users/register 
 - Creates a user 
-- payload: (email `Unique and valid`, username `Unique and 3 chars at least`, password `3 chars at least`)
+- payload: (`email` (Unique and valid), `username` (Unique and 3 chars at least), `password` (3 chars at least))
 > POST : /users/login
 - User logs in, returns JWT(username, email, _id)
 > POST : /users/logout
@@ -48,7 +48,7 @@ Example
 
 > POST : /items
 - Creates item (for logged in Users), returns the created object
-- payload: (title `3 chars at least `, category `valid`, imageUrl(Optional), description, location, phone(Optional), price)
+- payload: (`title` (3 chars at least), `category` (valid), `imageUrl`(Optional), `description`, `location`, `phone`(Optional), `price`)
 
 > PUT : /items/:id
 - Updates item (for logged in Users) and returns the edited object
