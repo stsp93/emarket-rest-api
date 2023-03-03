@@ -33,6 +33,13 @@ The API will be available at `http://localhost:3030`. You can test the endpoints
 - User logout, blacklisting JWT
 > POST : /users/profile
 - Returns array of all user listings
+> GET : /users/replies
+- Returns array of user replies
+> POST : /users/reply
+- Post a message to spec user
+- payload (`username`, `reply`)
+> DELETE : /users/replies/:id
+- Deletes reply with spec id
 ### /items
 
 > GET : /items/categories
