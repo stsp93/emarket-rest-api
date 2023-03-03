@@ -34,8 +34,8 @@ router.post('/', async (req, res) => {
 
 router.post('/:id/comment',async (req, res) => {
     const {comment} = req.body
-    console.log(req.body);
     try {
+        if (!req.token) throw { message: 'You need to login first', status: 403 }
         const result = await itemService.getItemDetails(req.params.id);
         const newComment = {
             item: result._id,
