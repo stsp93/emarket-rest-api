@@ -3,7 +3,8 @@ const {Item} = require("../models/Item");
 async function getListings(query = '', category) {
     let findQuery = {}
     if(category) findQuery.category = category
-    if(query) findQuery.title = new RegExp(query, 'i')
+    if(query) findQuery.title = new RegExp(query, 'i');
+    console.log(findQuery);
     
 
     return await Item.find(findQuery).collation({ locale: 'en', strength: 2 })
@@ -29,7 +30,7 @@ async function updateItem(id, user, changes) {
     return await item.save();
 }
 
-async function deleteItem(id, user, changes) {
+async function deleteItem(id, user) {
     const item = await Item.findById(id);
     if (item.owner !== user) throw { message: 'You can delete only your own listings', status: 403 };
 

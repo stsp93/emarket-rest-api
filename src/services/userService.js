@@ -61,11 +61,18 @@ async function saveListing(item) {
     user.save();
 }
 
+async function comment(comment, user) {
+    const exsistingUser = await User.findOne({username: item.owner}).collation({locale:'en', strength: 2});
+    exsistingUser.comments.push(comment);
+    user.save();
+}
+
 module.exports = {
     register,
     login,
     logout,
     verifyToken,
     getUserListings,
-    saveListing
+    saveListing,
+    comment
 }

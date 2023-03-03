@@ -24,24 +24,43 @@ const userSchema = new Schema({
     },
     ownListings: [
         {
-            type:Types.ObjectId,
-            ref:'Item'
+            type: Types.ObjectId,
+            ref: 'Item'
+        }
+    ],
+    hasNewComments: {
+        type: Boolean,
+        default: false,
+    },
+    comments: [
+        {
+            item: {
+                type: Types.ObjectId,
+                ref: 'Item'
+            },
+            username: {
+                type: String
+            },
+            comment: {
+                type: String,
+                required: [true, 'Comment cant be empty']
+            }
         }
     ]
 })
 
 // Hashing password before saving in the DB
 userSchema.pre('save', async function (next) {
-    if (this.isModified('password')){
+    if (this.isModified('password')) {
         this.password = await bcrypt.hash(this.password, SALT_ROUNDS)
     }
 
     next()
 })
 
-userSchema.index({email:1}, {
+userSchema.index({ email: 1 }, {
     collation: {
-        locale:'en',
+        locale: 'en',
         strength: 2
     }
 })
