@@ -59,5 +59,23 @@ router.delete('/comments/:id', async (req, res) => {
     }
 })
 
+router.post('/comment',async (req, res) => {
+    // Receives comment and recipient
+    const {comment, username} = req.body
+    try {
+        if (!req.token) throw { message: 'You need to login first', status: 403 }
+        const newComment = {
+            username: req.user.username,
+            comment
+        }
+        await userService.comment(newComment, username)
+      return res.json({comment}) 
+    }catch (error) {
+        console.log(error);
+        res.status(400).json(errorHandler(error));
+    }
+})
+
+
 
 module.exports = router;

@@ -34,10 +34,6 @@ const userSchema = new Schema({
     },
     comments: [
         {
-            item: {
-                type: Types.ObjectId,
-                ref: 'Item'
-            },
             username: {
                 type: String
             },

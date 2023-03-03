@@ -79,8 +79,9 @@ async function saveListing(item) {
 
 async function comment(comment, username) {
     if (!comment.comment) throw new Error('Comment can\'t be empty')
-
     const exsistingUser = await User.findOne({ username }).collation({ locale: 'en', strength: 2 });
+    if(!exsistingUser) throw new Error('There is no such user')
+
     exsistingUser.comments.push(comment);
     exsistingUser.hasNewComments = true;
     exsistingUser.save();
