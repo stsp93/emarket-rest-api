@@ -38,19 +38,19 @@ router.get('/profile', async (req, res) => {
     }
 })
 
-router.get('/comments', async (req, res) => {
+router.get('/replies', async (req, res) => {
     try {
-        const comments = await userService.getComments(req.user.username);
-        return res.json(comments);
+        const replies = await userService.getReplies(req.user.username);
+        return res.json(replies);
     } catch(error) {
         console.log(error);
         res.status(401).json(errorHandler(error))
     }
 })
 
-router.delete('/comments/:id', async (req, res) => {
+router.delete('/replies/:id', async (req, res) => {
     try {
-        await userService.delComment(req.user.username, req.params.id);
+        await userService.delReply(req.user.username, req.params.id);
 
         res.status(204).json({});
     }catch(error) {
@@ -59,17 +59,17 @@ router.delete('/comments/:id', async (req, res) => {
     }
 })
 
-router.post('/comment',async (req, res) => {
-    // Receives comment and recipient
-    const {comment, username} = req.body
+router.post('/reply',async (req, res) => {
+    // Receives reply and recipient
+    const {reply, username} = req.body
     try {
         if (!req.token) throw { message: 'You need to login first', status: 403 }
-        const newComment = {
+        const newReply = {
             username: req.user.username,
-            comment
+            reply
         }
-        await userService.comment(newComment, username)
-      return res.json({comment}) 
+        await userService.reply(newReply, username)
+      return res.json({reply}) 
     }catch (error) {
         console.log(error);
         res.status(400).json(errorHandler(error));

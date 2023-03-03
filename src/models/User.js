@@ -28,16 +28,16 @@ const userSchema = new Schema({
             ref: 'Item'
         }
     ],
-    hasNewComments: {
+    hasNewReplies: {
         type: Boolean,
         default: false,
     },
-    comments: [
+    replies: [
         {
             username: {
                 type: String
             },
-            comment: {
+            reply: {
                 type: String,
             }
         }

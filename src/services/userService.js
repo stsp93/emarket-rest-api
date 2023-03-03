@@ -77,31 +77,31 @@ async function saveListing(item) {
     user.save();
 }
 
-async function comment(comment, username) {
-    if (!comment.comment) throw new Error('Comment can\'t be empty')
+async function reply(reply, username) {
+    if (!reply.reply) throw new Error('Reply can\'t be empty')
     const exsistingUser = await User.findOne({ username }).collation({ locale: 'en', strength: 2 });
     if(!exsistingUser) throw new Error('There is no such user')
 
-    exsistingUser.comments.push(comment);
-    exsistingUser.hasNewComments = true;
+    exsistingUser.replies.push(reply);
+    exsistingUser.hasNewReplies = true;
     exsistingUser.save();
 
 }
 
-async function getComments(username) {
+async function getReplies(username) {
     const exsistingUser = await User.findOne({ username })
         .collation({ locale: 'en', strength: 2 })
-    exsistingUser.hasNewComments = false;
+    exsistingUser.hasNewReply = false;
     await exsistingUser.save();
 
-    return exsistingUser.comments;
+    return exsistingUser.replys;
 }
 
-async function delComment(username, commentId) {
+async function delReply(username, replyId) {
     const user = await User.findOne({ username })
     .collation({ locale: 'en', strength: 2 });
-    const commentIndex = user.comments.indexOf(c => c._id === commentId)
-    user.comments.splice(commentIndex, 1);
+    const replyIndex = user.replies.indexOf(c => c._id === replyId)
+    user.replys.splice(replyIndex, 1);
 
     user.save();
 }
@@ -113,7 +113,7 @@ module.exports = {
     verifyToken,
     getUserListings,
     saveListing,
-    comment,
-    getComments,
-    delComment
+    reply,
+    getReplies,
+    delReply
 }
