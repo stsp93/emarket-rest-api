@@ -33,23 +33,23 @@ router.post('/', async (req, res) => {
 })
 
 router.post('/:id/comment',async (req, res) => {
+    const {comment} = req.body
+    console.log(req.body);
     try {
         const result = await itemService.getItemDetails(req.params.id);
-        const comment = {
+        const newComment = {
             item: result._id,
-            username: result.owner,
-            comment: req.body.comment
+            username: req.user.username,
+            comment
         }
-
-        await userService.comment(comment, req.user.username);
-
+        await userService.comment(newComment, result.owner)
+      return res.json({comment}) 
     }catch (error) {
         console.log(error);
         res.status(400).json(errorHandler(error));
     }
-
-
 })
+
 
 
 

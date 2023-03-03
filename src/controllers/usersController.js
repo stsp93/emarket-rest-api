@@ -6,8 +6,7 @@ const router = require('express').Router();
 router.post('/register', async (req, res) => {
     try {
         const user = await userService.register(req.body);
-        const {username, email, _id} = user;
-        res.status(201).json({username, email, _id})
+        res.status(201).json(user)
     } catch (error) {
         console.log(error);
         res.status(400).json(errorHandler(error));
@@ -36,6 +35,27 @@ router.get('/profile', async (req, res) => {
     } catch (error) {
         console.log(error);
         res.status(401).json(errorHandler(error))
+    }
+})
+
+router.get('/comments', async (req, res) => {
+    try {
+        const comments = await userService.getComments(req.user.username);
+        return res.json(comments);
+    } catch(error) {
+        console.log(error);
+        res.status(401).json(errorHandler(error))
+    }
+})
+
+router.delete('/comments/:id', async (req, res) => {
+    try {
+        await userService.delComment(req.user.username, req.params.id);
+
+        res.status(204).json({});
+    }catch(error) {
+        console.log(error);
+        res.status(403).json(errorHandler(error))
     }
 })
 

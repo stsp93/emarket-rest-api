@@ -43,7 +43,6 @@ const userSchema = new Schema({
             },
             comment: {
                 type: String,
-                required: [true, 'Comment cant be empty']
             }
         }
     ]
