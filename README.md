@@ -32,7 +32,7 @@ The API will be available at `http://localhost:3030`. You can test the endpoints
 > POST : /users/logout
 - User logout, blacklisting JWT
 > POST : /users/profile
-- Returns array of all user listings
+- Returns profile data
 > GET : /users/replies
 - Returns array of user replies
 > POST : /users/reply
