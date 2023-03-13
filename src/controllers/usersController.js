@@ -30,7 +30,7 @@ router.get('/logout', (req, res) => {
 
 router.get('/profile', async (req, res) => {
     try {
-        const {ownListings:profile} = await userService.getUserListings(req.user._id)
+        const profile = await userService.getUserListings(req.user._id)
         return res.json(profile);
     } catch (error) {
         console.log(error);

@@ -4,8 +4,7 @@ async function getListings(query = '', category) {
     let findQuery = {}
     if(category) findQuery.category = category
     if(query) findQuery.title = new RegExp(query, 'i');
-    console.log(findQuery);
-    
+
 
     return await Item.find(findQuery).collation({ locale: 'en', strength: 2 })
 }

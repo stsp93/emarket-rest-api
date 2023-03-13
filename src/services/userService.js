@@ -68,7 +68,7 @@ async function verifyToken(token) {
 }
 
 async function getUserListings(userId) {
-    return await User.findById(userId).populate('ownListings', '-ownListings.owner')
+    return await User.findById(userId).select('-password').populate('ownListings', '-ownListings.owner')
 }
 
 async function saveListing(item) {
@@ -90,18 +90,18 @@ async function reply(reply, username) {
 
 async function getReplies(username) {
     const exsistingUser = await User.findOne({ username })
-        .collation({ locale: 'en', strength: 2 })
-    exsistingUser.hasNewReply = false;
+    .collation({ locale: 'en', strength: 2 })
+    exsistingUser.hasNewReplies = false;
     await exsistingUser.save();
 
-    return exsistingUser.replys;
+    return exsistingUser.replies;
 }
 
 async function delReply(username, replyId) {
     const user = await User.findOne({ username })
     .collation({ locale: 'en', strength: 2 });
     const replyIndex = user.replies.indexOf(c => c._id === replyId)
-    user.replys.splice(replyIndex, 1);
+    user.replies.splice(replyIndex, 1);
 
     user.save();
 }
