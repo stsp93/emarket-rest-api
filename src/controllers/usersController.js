@@ -59,7 +59,7 @@ router.delete('/replies/:id', async (req, res) => {
     }
 })
 
-router.post('/reply',async (req, res) => {
+router.post('/replies',async (req, res) => {
     // Receives reply and recipient
     const {reply, username} = req.body
     try {
