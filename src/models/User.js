@@ -39,6 +39,10 @@ const userSchema = new Schema({
             },
             reply: {
                 type: String,
+            },
+            date: {
+                type: String,
+                default: () => new Date(Date.now())
             }
         }
     ]
