@@ -100,8 +100,8 @@ async function getReplies(username) {
 async function delReply(username, replyId) {
     const user = await User.findOne({ username })
     .collation({ locale: 'en', strength: 2 });
-    const replyIndex = user.replies.indexOf(c => c._id === replyId)
-    user.replies.splice(replyIndex, 1);
+
+    user.replies = user.replies.filter(r => !r._id.equals(replyId))
 
     user.save();
 }
