@@ -1,5 +1,7 @@
-const SALT_ROUNDS = 10;
-const JWT_SECRET = 'N*!7y8N&1nyj!Ljw8!w uh1@'
+require('dotenv').config()
+
+const SALT_ROUNDS = process.env.SALT_ROUNDS || 10;
+const JWT_SECRET = process.env.JWT_SECRET || 'N*!7y8N&1nyj!Ljw8!w uh1@'
 const CATEGORIES = {
     'Electronics': `https://images.unsplash.com/photo-1627313433073-a98d074772e5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80`,
     'Clothing': `https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80`,
