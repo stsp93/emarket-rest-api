@@ -31,10 +31,6 @@ router.post('/', async (req, res) => {
     }
 })
 
-
-
-
-
 router.get('/:id', async (req, res) => {
     try {
         const result = await itemService.getItemDetails(req.params.id);

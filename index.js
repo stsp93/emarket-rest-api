@@ -4,7 +4,6 @@ const db = require('./src/config/database');
 const router = require('./src/router');
 const cookieParser = require('cookie-parser');
 const sessionMiddleware = require('./src/middlewares/sessionMiddleware');
-// require('dotenv').config()
 
 const app = express();
 const PORT = process.env.PORT || 3030;

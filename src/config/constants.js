@@ -1,5 +1,3 @@
-// require('dotenv').config()
-
 const SALT_ROUNDS = process.env.SALT_ROUNDS || 10;
 const JWT_SECRET = process.env.JWT_SECRET || 'N*!7y8N&1nyj!Ljw8!w uh1@'
 const CATEGORIES = {

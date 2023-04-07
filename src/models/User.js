@@ -51,7 +51,7 @@ const userSchema = new Schema({
 // Hashing password before saving in the DB
 userSchema.pre('save', async function (next) {
     if (this.isModified('password')) {
-        this.password = await bcrypt.hash(this.password, SALT_ROUNDS)
+        this.password = await bcrypt.hash(this.password, 10)
     }
 
     next()

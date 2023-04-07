@@ -1,5 +1,5 @@
 const { Schema, model } = require("mongoose");
-const { CATEGORIES, NO_IMG_URL} = require("../config/constants");
+const { CATEGORIES, NO_IMG_URL } = require("../config/constants");
 
 const itemSchema = new Schema({
     title: {
@@ -17,16 +17,16 @@ const itemSchema = new Schema({
             message: props => `${props.value} is not a valid Category!`
         }
     },
-    imageUrl: {
-        type: String,
+    images: {
+        type: [String],
     },
     description: {
-        type:String,
-        required:[true, 'Please add description']
+        type: String,
+        required: [true, 'Please add description']
     },
     location: {
-        type:String,
-        required:[true, 'Please add location']
+        type: String,
+        required: [true, 'Please add location']
     },
     phone: {
         type: Number
@@ -46,24 +46,24 @@ const itemSchema = new Schema({
 })
 
 // Find to return results by date
-itemSchema.pre('find', function(next) {
-    this.sort({createdOn: -1})
+itemSchema.pre('find', function (next) {
+    this.sort({ createdOn: -1 })
     next()
 })
 
 // Pre save hooks
-itemSchema.pre('save', function(next) {
+itemSchema.pre('save', function (next) {
     // format price (10.99)
     this.price = this.price.toFixed(2)
     // set default imageUrl if invalid
-    if((!this.imageUrl.match(/https?:\/\//i))) this.imageUrl = NO_IMG_URL;
+    if (this.images.length === 0) this.images = [NO_IMG_URL];
     next();
 })
 
 
-itemSchema.index({title:1}, {
+itemSchema.index({ title: 1 }, {
     collation: {
-        locale:'en',
+        locale: 'en',
         strength: 2
     }
 })

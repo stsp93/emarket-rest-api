@@ -8,7 +8,6 @@ async function getListings(query = '', category) {
     return await Item.find(findQuery).collation({ locale: 'en', strength: 2 })
 }
 
-
 async function getItemDetails(id) {
     return await Item.findById(id);
 }
